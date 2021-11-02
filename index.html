@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monster slayer</title>
+  <link rel="icon" type="image/png" href="./images/user-01.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Monster Slayer</h1>
+  </header>
+  <div id="app">
+    <div class="bg-image">
+      <div class="btn-start">
+        <div class="overlay_menu top" :style="styleOverlayTop"></div>
+        <div class="overlay_menu bottom" :style="styleOverlayBottom"></div>
+        <img class="start top" @click="startGame" :style="styleStartTop" src="images/top_Start.png" alt="">
+        <img class="start bottom" @click="startGame" :style=" styleStartBottom"  src="images/bottom_Start.png" alt="">
+      </div>
+      <div class="level">
+        <button class="btn easy" @click="chooseEasy" :style="styleStartTop">Easy</button>
+        <button class="btn hard" @click="chooseHard" :style="styleStartBottom">Hard</button>
+      </div>
+      <div class="container">
+        <div class="item" id="user">
+          <p class="damgeuser" :class="{'open': userAnimate}"> -{{monsterDamage}}</p>
+          <p class="more_heart" :class="{'open': healAnimate}" > +{{healHeart}}</p>
+          <div class="heart-wrap">
+            <div :style="{width: userHeart + '%'}" class="heart"></div>
+          </div>
+          <img src="./images/user-01.png" class="warrior-img" :class="{attack: isAttack, damged: isUserDameged }" alt="">
+          <img class="bubble" v-for="n in 10" src="images/health-icon-removebg-preview.png" :class="[{active: isActiveBubble},`x${n}`]" alt="">
+          <img src="./images/kiem-01.png" class="sword" :class="{'bigUp': isBigger, 'active': isSlide}" alt="">
+        </div>
+        <div class="item" id="monster">
+          <p class="damge" :class="{'open': monsterAnimate}">-{{userDamage}}</p>
+          <div class="heart-wrap">
+            <div :style="{width: monsterHeart + '%'}" class="heart"></div>
+          </div>
+          <img style="width: 284px; height: 307px;" src="./images/monster-01.png" alt="" class="monster-img" :class="{attacked: isAttacked, 'active': isFire}">
+          <img src="./images/fire_ball.png" class="fire_ball" :class="{'open': isAppear}" alt="">
+        </div>
+      </div>
+      <div class="controls" >
+        <button v-if="!isFighting" @click="userAttack" v-show="handlebtn">Attack</button>
+        <button v-if="!isFighting" :disabled="canUseBuff" @click="userBuff" v-show="handlebtn">Buff</button>
+        <button v-if="!isFighting" :disabled="canUseSpecialAttack" @click="specialAttackMonster" v-show="handlebtn">Special attack</button>
+        <button v-if="!isFighting" @click="surrender" v-show="handlebtn">Surrender</button>
+      </div>
+      <div class="end-game" v-if="headleEnd1">
+        <img src="./images/winner-01.png" alt="">
+        <button @click="startNewGame">Start New Game</button>
+      </div>
+      <div class="end-game2" v-else-if="headleEnd2">
+        <img src="./images/loser-01.png" alt="">
+        <button @click="startNewGame">Start New Game</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

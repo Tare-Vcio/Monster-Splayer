@@ -1,2 +1,1 @@
-# Monster-Splayer
-Team 1
+# game_project
